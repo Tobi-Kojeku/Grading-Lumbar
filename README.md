@@ -33,7 +33,7 @@ Included headline comparisons:
 
 ## Methods 
 - Data preparation:
-  - reshape REDCap data from **long format** to **wide format** for analysis
+  - reshape REDCap data from **wide format** to **long format** for analysis
   - define categorical grading levels (None, Mild, Moderate, Severe)
   - align rater variables to the required agreement analysis format
 - Interrater agreement (ordinal):
