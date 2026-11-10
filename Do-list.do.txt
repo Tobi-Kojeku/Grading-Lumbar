@@ -1,0 +1,109 @@
+////Created by Oluwatobi
+///PI: XXX XXX
+///Department: Radiology
+
+/********************************************************************
+* CODE-ONLY VERSION 
+* - Original identifiable data is NOT included.
+* - To run: put your .dta/.xlsx locally and update DATA_PATH + INPUT_FILE.
+********************************************************************/
+
+* >>> CHANGE THESE TWO LINES BEFORE RUNNING LOCALLY <<<
+global DATA_PATH   "PATH/TO/YOUR/FOLDER"
+global INPUT_FILE  "initial data.dta"
+
+capture confirm file "$DATA_PATH/$INPUT_FILE"
+if _rc != 0 {
+    di as error "Data file not found: $DATA_PATH/$INPUT_FILE"
+    di as error "This repository contains code only."
+    di as error "To run, download/provide the data locally and set DATA_PATH/INPUT_FILE."
+    exit 1
+}
+
+use "$DATA_PATH/$INPUT_FILE", clear
+
+
+/Data preparation for analysis/
+
+describe study_id redcap_event_name redcap_survey_identifier baseline_survey_timestamp mcq_1 experience_level baseline_survey_complete week_post_intervention_timestamp edu_yes_no days mcq_1_v2 weeks_post_intervention_timestam edu_yes_no_2m_edb380 re_read days_since_read weeks_post_intervention_complete
+
+rename baseline_survey_timestamp baselinedate
+
+rename week_post_intervention_timestamp oneweekdate
+
+rename weeks_post_intervention_timestam twomonthdate
+
+/Reshape database from long to wide format/
+
+reshape wide mcq_1 mcq_2 mcq_3 mcq_4 mcq_5 mcq_6 mcq_7 mcq_8 mcq_9 mcq_10 mcq_11 mcq_12 mcq_13 mcq_14 mcq_15 mcq_16 mcq_17 mcq_18 mcq_19 mcq_20 mcq_21 mcq_22 mcq_23 mcq_24 mcq_25 mcq_1_v2 mcq_2_v2 mcq_3_v2 mcq_4_v2 mcq_5_v2 mcq_6_v2 mcq_7_v2 mcq_8_v2 mcq_9_v2 mcq_10_v2 mcq_11_v2 mcq_12_v2 mcq_13_v2 mcq_14_v2 mcq_15_v2 mcq_16_v2 mcq_17_v2 mcq_18_v2 mcq_19_v2 mcq_20_v2 mcq_21_v2 mcq_22_v2 mcq_23_v2 mcq_24_v2 mcq_25_v2 mcq_1_v2_2m mcq_2_v2_2m mcq_3_v2_2m mcq_4_v2_2m mcq_5_v2_2m mcq_6_v2_2m mcq_7_v2_2m mcq_8_v2_2m mcq_9_v2_2m mcq_10_v2_2m mcq_11_v2_2m mcq_12_v2_2m mcq_13_v2_2m mcq_14_v2_2m mcq_15_v2_2m mcq_16_v2_2m mcq_17_v2_2m mcq_18_v2_2m mcq_19_v2_2m mcq_20_v2_2m mcq_21_v2_2m mcq_22_v2_2m mcq_23_v2_2m mcq_24_v2_2m mcq_25_v2_2m baselinedate oneweekdate twomonthdate , i(study_id) j(redcap_event_name) string
+
+drop baselinedate1_week_post_arm_1 - mcq_251_week_post_arm_1
+
+drop twomonthdate1_week_post_arm_1 - mcq_25_v22_months_post_arm_1
+
+drop oneweekdatebaseline_arm_1 - mcq_25_v2_2mbaseline_arm_1
+
+save "g"
+
+import excel "g"
+
+la de rater1 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater1 rater1
+
+la de rater2 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater2 rater2
+
+la de rater3 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater3 rater3
+
+la de rater4 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater4 rater4
+
+la de rater5 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater5 rater5
+
+la de rater6 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater6 rater6
+
+la de rater7 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater7 rater7
+
+la de rater8 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater8 rater8
+
+la de rater9 1"None" 2"Mild" 3"Moderate" 4"Severe"
+la val rater9 rater9
+
+egen none=anycount(rater1-rater9), v(1)
+egen mild=anycount(rater1-rater9), v(2)
+egen moderate=anycount(rater1-rater9), v(3)
+egen severe=anycount(rater1-rater9), v(4)
+
+graph bar none mild moderate severe, over(type)
+
+total none if type=="baseline"
+total mild if type=="baseline"
+total moderate if type=="baseline"
+total severe if type=="baseline"
+total none if type=="post1"
+total mild if type=="post1"
+total moderate if type=="post1"
+total severe if type=="post1"
+total none if type=="post2"
+total mild if type=="post2"
+total moderate if type=="post2"
+total severe if type=="post2"
+
+kappaetc rater1-rater9 if type=="baseline", wgt(ordinal)
+kappaetc rater1-rater9 if type=="post1", wgt(ordinal)
+kappaetc rater1-rater9 if type=="post2", wgt(ordinal)
+kappaetc rater1-rater9 if type=="baseline", wgt(ordinal) store(group1)
+kappaetc rater1-rater9 if type=="post1", wgt(ordinal) store(group2)
+kappaetc group1==group2
+kappaetc rater1-rater9 if type=="post2", wgt(ordinal) store(group3)
+kappaetc group1==group3
+kappaetc group1==group2
+kappaetc group2==group3
+kappaetc group3==group2
+end
+
