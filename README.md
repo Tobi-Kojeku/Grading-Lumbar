@@ -1,7 +1,7 @@
 # Grading Lumbar Foraminal Stenosis — Interrater Reliability Before/After Education (Stata 17)
 
 ## Overview
-This project analyzes interrater agreement in MRI grading of lumbar foraminal stenosis across three timepoints:
+This project analyses interrater agreement in MRI grading of lumbar foraminal stenosis across three timepoints:
 - **Baseline**
 - **Post 1 week**
 - **Post 6 weeks**
@@ -9,9 +9,9 @@ This project analyzes interrater agreement in MRI grading of lumbar foraminal st
 The goal is to quantify how agreement changes following education on a standardized grading scale, supporting interpretation for a manuscript submission.
 
 ## My role
-Health Data Analyst / Statistician (research-focused)
+Health Data Analyst / Statistician 
 - Built a reproducible analysis pipeline in **Stata 17**
-- Prepared REDCap longitudinal data for analysis (REDCap long → analysis-ready wide)
+- Prepared REDCap longitudinal data for analysis 
 - Performed categorical variable coding/labeling and derived index variables
 - Computed interrater agreement metrics and compared them across timepoints
 - Prepared statistical outputs and contributed to manuscript results discussion
@@ -45,7 +45,7 @@ Included headline comparisons:
 
 ## What’s in this repo
 - `code/Do-list.do` — Stata 17 DO-file containing:
-  - data cleaning + transformation (wide→ long)
+  - data cleaning + transformation (wide → long)
   - categorical coding / label definitions
   - interrater agreement computation:
     - **Gwet’s coefficient (ordinal weighting)**
