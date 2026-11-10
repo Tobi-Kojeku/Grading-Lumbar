@@ -1,11 +1,10 @@
 Grading
 ├─ README.md
 ├─ code/
-│  └─ Bender.do
+│  └─ Do-list.do
 ├─ outputs/
-│  ├─ figures/         (exported graphs, optional if you can export them)
-│  └─ tables/         (exported tables, optional)
+│  ├─ Figures/Tables
 └─ docs/
-   ├─ study-aims-and-design.pdf      (from “Projects”)
-   ├─ manuscript-headlines.pdf      (from “resultdraft” – can be a PDF with tables/figures)
-   └─ data-monitoring-overview.pdf  (from “GradingLumbar” – QC summary only)
+   ├─ study-aims-and-design.pdf     
+   ├─ manuscript-headlines.pdf      
+   └─ data-monitoring-overview.pdf  
