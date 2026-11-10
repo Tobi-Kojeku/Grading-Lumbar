@@ -44,8 +44,8 @@ Included headline comparisons:
 
 
 ## What’s in this repo
-- `code/Bender.do` — Stata 17 DO-file containing:
-  - data cleaning + transformation (long → wide)
+- `code/Do-list.do` — Stata 17 DO-file containing:
+  - data cleaning + transformation (wide→ long)
   - categorical coding / label definitions
   - interrater agreement computation:
     - **Gwet’s coefficient (ordinal weighting)**
